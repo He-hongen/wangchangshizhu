@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>道歉信</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'PingFang SC', '微软雅黑', sans-serif;
+            background: linear-gradient(135deg, #ffc2cd, #a8e6ff, #ffd3e0, #c2f0ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .apology-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 105, 180, 0.3);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 10;
+        }
+        
+        .apology-title {
+            color: #ff69b4;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .apology-content {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-align: left;
+            padding: 20px;
+            background: rgba(255, 240, 245, 0.7);
+            border-radius: 15px;
+            border-left: 4px solid #ff69b4;
+        }
+        
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+        
+        .btn {
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .agree-btn {
+            background: linear-gradient(45deg, #ff9ec5, #ff69b4);
+            color: white;
+        }
+        
+        .disagree-btn {
+            background: linear-gradient(45deg, #a8e6ff, #6bb0ff);
+            color: white;
+            position: absolute;
+            z-index: 20;
+            transition: left 0.5s ease, top 0.5s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .heart {
+            color: #ff69b4;
+            font-size: 24px;
+            display: inline-block;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 480px) {
+            .apology-container {
+                padding: 20px 15px;
+            }
+            
+            .apology-title {
+                font-size: 24px;
+            }
+            
+            .apology-content {
+                font-size: 16px;
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="apology-container">
+        <h1 class="apology-title">真诚的道歉 <span class="heart">❤️</span></h1>
+        
+        <div class="apology-content">
+            <p>亲爱的乖乖：</p>
+            <br>
+            <p>上班无聊就想你嘞~。</p>
+            <br>
+            <p>刚从冰箱里摸了瓶饮料，拧开盖子的时候还在想，你要是在这儿，肯定会抢过去先抿一口。</p>
+            <br>
+            <p>下周你那边要是不忙，就过来呗？到时候我去地铁站接你，手里给你拎瓶冰可乐。到家了就往沙发上一瘫，点个你爱吃的外卖，或者我炒两个菜，边吃边瞎侃，多好。</p>
+            <br>
+            <p>你看看时间，方便的话吱一声，我好提前把你睡的那床被子晒一晒。</p>
+            <br>
+            <p>我将会请你喝秋天的第一杯奶茶，并表示我最大的爱意，同时邀请您下周末与我一同享受二人的世界。</p>
+            <br>
+            <p>您的同意，是我最大的动力。</p>
+            <p style="text-align: right;">此致<br>敬礼</p>
+        </div>
+        
+        <div class="buttons-container">
+            <button class="btn agree-btn" onclick="agree()">同意</button>
+        </div>
+    </div>
+
+    <script>
+        // 创建不同意按钮
+        const disagreeBtn = document.createElement('button');
+        disagreeBtn.className = 'btn disagree-btn';
+        disagreeBtn.textContent = '不同意';
+        disagreeBtn.onclick = moveDisagreeButton;
+        document.body.appendChild(disagreeBtn);
+        
+        // 初始化按钮位置（在同意按钮下方）
+        function initDisagreeButtonPosition() {
+            const agreeBtn = document.querySelector('.agree-btn');
+            const containerRect = agreeBtn.getBoundingClientRect();
+            const containerStyle = window.getComputedStyle(agreeBtn);
+            
+            // 获取容器位置信息
+            const containerTop = containerRect.top + window.scrollY;
+            const containerLeft = containerRect.left + window.scrollX;
+            
+            // 设置按钮位置在同意按钮下方
+            disagreeBtn.style.position = 'absolute';
+            disagreeBtn.style.left = containerLeft + 'px';
+            disagreeBtn.style.top = (containerTop + agreeBtn.offsetHeight + 15) + 'px';
+        }
+        
+        function agree() {
+            // 跳转到下一个页面
+            window.location.href = 'next.html';
+        }
+        
+        function moveDisagreeButton() {
+            // 获取页面尺寸
+            const maxX = window.innerWidth - disagreeBtn.offsetWidth;
+            const maxY = window.innerHeight - disagreeBtn.offsetHeight;
+            
+            // 生成随机位置
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            // 设置按钮位置
+            disagreeBtn.style.left = randomX + 'px';
+            disagreeBtn.style.top = randomY + 'px';
+        }
+        
+        // 页面加载完成后初始化按钮位置
+        window.addEventListener('load', initDisagreeButtonPosition);
+        // 窗口大小改变时重新定位按钮
+        window.addEventListener('resize', initDisagreeButtonPosition);
+    </script>
+</body>
+</html>
